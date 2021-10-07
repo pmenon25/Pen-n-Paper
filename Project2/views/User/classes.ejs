@@ -7,7 +7,47 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>classes</h1>
-    <%= classes[1].slug%>
+    <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link"  href="/user/show/equipments">Equipments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/show/classes">Classes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/show">Home</a>
+        </li>
+      </ul>
+    <h1>Classes</h1>
+    <div class="card">
+        <% for (let items of classes){%>
+            <div class="card-body">
+                <h5 class="card-title"><%= items.name%></h5>
+                <p class="card-text">
+                <ul>
+                    <li>HP_at_1st_level: <%= items.hp_at_1st_level%>
+                    </li>
+                    <li>HP_at_higher_levels : <%= items.hp_at_higher_levels%>
+                    </li>
+                    <li>Proficiency_Armor: <%= items.prof_armor%>
+                    </li>
+                    <li>Proficiency_Weapons: <%= items.prof_weapons%>
+                    </li>
+                    <li>Proficiency_Tools: <%= items.prof_tools%>
+                    </li>
+                    <li>Proficiency_Saving_Throws: <%= items.prof_saving_throws%>
+                    </li>
+                    <li>Proficiency_Skills: <%= items.prof_skills%>
+                    </li>
+                </ul>
+                </p>
+            </div>
+            <%}%>
+    </div>
+
+
+</body>
+
+</html>
 </body>
 </html>

@@ -1,13 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel='stylesheet' href='/stylesheets/spells.css'>
+    <title>Spells</title>
 </head>
+
 <body>
+    <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link"  href="/user/show/equipments">Equipments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/show/classes">Classes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/show">Home</a>
+        </li>
+      </ul>
     <h1>spells</h1>
-    <%= spells[1].name%>
+    <div class="card">
+        <% for (let items of spells){%>
+            <div class="card-body">
+                <h5 class="card-title"><%= items.name%></h5>
+                <p class="card-text">
+                <ul>
+                    <li>Range : <%= items.range%>
+                    </li>
+                    <li>Level : <%= items.level%>
+                    </li>
+                    <li>Class : <%= items.dnd_class%>
+                    </li>
+                    <li>Duration : <%= items.duration%>
+                    </li>
+                    <li>Casting Time : <%= items.casting_time%>
+                    </li>
+                </ul>
+                </p>
+            </div>
+            <%}%>
+    </div>
+
+
 </body>
+
 </html>

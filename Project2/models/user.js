@@ -1,11 +1,18 @@
 var mongoose = require('mongoose');
-const { equipment } = require('../controller/userCtrl');
 const Schema = mongoose.Schema;
 
-
+var classesSchema = new mongoose.Schema({
+  name:String,
+  hp_at_1st_level:Number,
+  hp_at_higher_levels:Number,
+  prof_armor:String,
+  prof_weapons:String,
+  prof_tools:String,
+  prof_saving_throws:String,
+  prof_skills:String 
+})
 var spellsSchema = new mongoose.Schema({
   name:String,
-  description:String,
   range: String,
   level:Number,
   class: String,
