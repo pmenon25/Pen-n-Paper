@@ -13,262 +13,259 @@
 </head>
 
 <body>
-
-
-    <div class='container'>
+    <div class='container-sm'>
         <h1>Character Creation</h1>
+        <form action="/user/show" method="POST">
+            <div class="row">
+                <div class="col">
+                    <input placeholder='<%= defaultSettings.name%>'name="name" id = 'name'>
+                </div>
 
-        <div class="row">
-            <div class="col">
-                <input placeholder="Name" name="name">
-            </div>
+                <div class="col">
+                    <label>Class <select id="classes" selected='<%= defaultSettings.class%>'>
+                            <option value="Barbarian">Barbarian</option>
+                            <option value="Cleric">Cleric</option>
+                            <option value="Druid">Druid</option>
+                            <option value="Monk">Monk</option>
+                            <option value="Paladin">Paladin</option>
+                            <option value="Rogue">Rogue</option>
+                            <option value="Sorcerer">Sorcerer</option>
+                            <option value="Warlock">Warlock</option>
+                            <option value="Wizard">Wizard</option>
+                        </select>
+                    </label>
+                </div>
 
-            <div class="col">
-                <label>Class <select id="classes">
-                        <option value="Barbarian">Barbarian</option>
-                        <option value="Cleric">Cleric</option>
-                        <option value="Druid">Druid</option>
-                        <option value="Monk">Monk</option>
-                        <option value="Paladin">Paladin</option>
-                        <option value="Rogue">Rogue</option>
-                        <option value="Sorcerer">Sorcerer</option>
-                        <option value="Warlock">Warlock</option>
-                        <option value="Wizard">Wizard</option>
-                    </select>
-                </label>
-            </div>
-
-            <div class="col">
-                <label class="label">Level
-                    <select id="level">
-                        <% for(let i=1 ; i <=20 ; i++){%>
-                            <option value=<%=i%>>
-                                <%= i%>
-                            </option>
-                            <%}%>
-                    </select>
-                </label>
-            </div>
-        </div>
-
-
-        <!-- Row 2: Armour class and bonuses -->
-
-        <div class="row py-3">
-            <div class="col">
-                <div>
-                    <label for="prof-bonus-label" class="form-label">Proficiency Bonus</label>
-                    <input class="form-control" id="prof-bonus-field" placeholder="+0">
+                <div class="col">
+                    <label class="label">Level
+                        <select id="level" selected='<%= defaultSettings.level%>'>
+                            <% for(let i=1 ; i <=20 ; i++){%>
+                                <option value=<%=i%>>
+                                    <%= i%>
+                                </option>
+                                <%}%>
+                        </select>
+                    </label>
                 </div>
             </div>
 
-            <div class="col">
-                <div>
-                    <label for="ac-label" class="form-label">Armour Class</label>
-                    <input class="form-control" id="ac-field" placeholder="+0">
-                </div>
-            </div>
 
-            <div class="col">
-                <div>
-                    <label for="hp-label" class="form-label">Hit Points</label>
-                    <input class="form-control" id="hp-field" placeholder="+0">
-                </div>
-            </div>
+            <!-- Row 2: Armour class and bonuses -->
 
-        </div>
-
-        <!-- Row 3: Skills and attributes -->
-
-        <div class="row py-3">
-            <div class='col'>
-                <div class="card">
-                    <div class="card-header  bg-info bg-gradient">
-                        Strength
+            <div class="row py-3">
+                <div class="col">
+                    <div>
+                        <label for="prof-bonus-label" class="form-label">Proficiency Bonus</label>
+                        <input class="form-control" id="prof-bonus-field" placeholder="+0">
                     </div>
-                    <ul class="list-group  list-group-flush">
-                        <li class="list-group-item">
-                            <label for="str-modifier-label" class="form-label">Modifier</label>
-                            <input class="form-control" id="str-modifier" placeholder="+0">
-                        </li>
-                        <li class="list-group-item">
-                            <label for="str-saving-throw-label" class="form-label">Saving Throw</label>
-                            <input class="form-control" id="str-saving-throw" placeholder="+0">
-                        </li>
-
-                        <li class="list-group-item">
-                            <p>Athletics</p>
-                        </li>
-                    </ul>
                 </div>
+
+                <div class="col">
+                    <div>
+                        <label for="ac-label" class="form-label">Armour Class</label>
+                        <input class="form-control" id="ac-field" placeholder="+0">
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div>
+                        <label for="hp-label" class="form-label">Hit Points</label>
+                        <input class="form-control" id="hp-field" placeholder="+0">
+                    </div>
+                </div>
+
             </div>
 
-            <div class='col'>
-                <div class="card">
-                    <div class="card-header bg-primary bg-gradient">
-                        Dexterity
-                    </div>
+            <!-- Row 3: Skills and attributes -->
 
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <label for="dex-modifier-label" class="form-label">Modifier</label>
-                            <input class="form-control" id="dex-modifier" placeholder="+0">
-                        </li>
-                        <li class="list-group-item">
-                            <label for="dex-saving-throw-label" class="form-label">Saving Throw</label>
-                            <input class="form-control" id="dex-saving-throw" placeholder="+0">
-                        </li>
-                        <li class="list-group-item">
-                            <p>Acrobatics</p>
-                            <p>Sleight of Hand</p>
-                            <p>Stealth</p>
-                        </li>
-                    </ul>
+            <div class="row py-3">
+                <div class='col'>
+                    <div class="card">
+                        <div class="card-header  bg-info bg-gradient">
+                            Strength
+                        </div>
+                        <ul class="list-group  list-group-flush">
+                            <li class="list-group-item">
+                                <label for="str-modifier-label" class="form-label">Modifier</label>
+                                <input class="form-control" id="str-modifier" placeholder="+0">
+                            </li>
+                            <li class="list-group-item">
+                                <label for="str-saving-throw-label" class="form-label">Saving Throw</label>
+                                <input class="form-control" id="str-saving-throw" placeholder="+0">
+                            </li>
+
+                            <li class="list-group-item" id = 'str-skills'>
+                                <p>Athletics</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class='col'>
-                <div class="card">
-                    <div class="card-header bg-danger bg-gradient">
-                        Constitution
-                    </div>
-                    <div class="list-group  list-group-flush">
-                        <div class="list-group-item">
-                            <label for="con-modifier-label" class="form-label">Modifier</label>
-                            <input class="form-control" id="con-modifier" placeholder="+0">
+                <div class='col'>
+                    <div class="card">
+                        <div class="card-header bg-primary bg-gradient">
+                            Dexterity
                         </div>
 
-                        <div class="list-group-item">
-                            <label for="con-saving-throw-label" class="form-label">Saving Throw</label>
-                            <input class="form-control" id="con-saving-throw" placeholder="+0">
-                        </div>
-
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <label for="dex-modifier-label" class="form-label">Modifier</label>
+                                <input class="form-control" id="dex-modifier" placeholder="+0">
+                            </li>
+                            <li class="list-group-item">
+                                <label for="dex-saving-throw-label" class="form-label">Saving Throw</label>
+                                <input class="form-control" id="dex-saving-throw" placeholder="+0">
+                            </li>
+                            <li class="list-group-item" id = 'dex-skills'>
+                                <p>Acrobatics</p>
+                                <p>Sleight of Hand</p>
+                                <p>Stealth</p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
 
-            <div class='col'>
-                <div class="card">
-                    <div class="card-header bg-success bg-gradient">
-                        Intelligence
-                    </div>
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item">
-                            <label for="int-modifier-label" class="form-label">Modifier</label>
-                            <input class="form-control" id="int-modifier" placeholder="+0">
+                <div class='col'>
+                    <div class="card">
+                        <div class="card-header bg-danger bg-gradient">
+                            Constitution
                         </div>
-                        <div class="list-group-item">
-                            <label for="int-saving-throw-label" class="form-label">Saving Throw</label>
-                            <input class="form-control" id="int-saving-throw" placeholder="+0">
-                        </div>
-                        <div class="list-group-item">
-                            <p>Arcana</p>
-                            <p>History </p>
-                            <p>Investigation </p>
-                            <p>Nature</p>
-                            <p>Religion</p>
+                        <div class="list-group  list-group-flush">
+                            <div class="list-group-item">
+                                <label for="con-modifier-label" class="form-label">Modifier</label>
+                                <input class="form-control" id="con-modifier" placeholder="+0">
+                            </div>
+
+                            <div class="list-group-item">
+                                <label for="con-saving-throw-label" class="form-label">Saving Throw</label>
+                                <input class="form-control" id="con-saving-throw" placeholder="+0">
+                            </div>
+
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class='col'>
-                <div class="card">
-                    <div class="card-header bg-warning bg-gradient">
-                        Wisdom
+                <div class='col'>
+                    <div class="card">
+                        <div class="card-header bg-success bg-gradient">
+                            Intelligence
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item">
+                                <label for="int-modifier-label" class="form-label">Modifier</label>
+                                <input class="form-control" id="int-modifier" placeholder="+0">
+                            </div>
+                            <div class="list-group-item">
+                                <label for="int-saving-throw-label" class="form-label">Saving Throw</label>
+                                <input class="form-control" id="int-saving-throw" placeholder="+0">
+                            </div>
+                            <div class="list-group-item" id = 'int-skills'>
+                                <p>Arcana</p>
+                                <p>History </p>
+                                <p>Investigation </p>
+                                <p>Nature</p>
+                                <p>Religion</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="list-group  list-group-flush">
-                        <div class="list-group-item">
-                            <label for="wis-modifier-label" class="form-label">Modifier</label>
-                            <input class="form-control" id="wis-modifier" placeholder="+0">
+                </div>
+
+                <div class='col'>
+                    <div class="card">
+                        <div class="card-header bg-warning bg-gradient">
+                            Wisdom
                         </div>
-                        <div class="list-group-item">
-                            <label for="wis-saving-throw-label" class="form-label">Saving Throw</label>
-                            <input class="form-control" id="wis-saving-throw" placeholder="+0">
+                        <div class="list-group  list-group-flush">
+                            <div class="list-group-item">
+                                <label for="wis-modifier-label" class="form-label">Modifier</label>
+                                <input class="form-control" id="wis-modifier" placeholder="+0">
+                            </div>
+                            <div class="list-group-item">
+                                <label for="wis-saving-throw-label" class="form-label">Saving Throw</label>
+                                <input class="form-control" id="wis-saving-throw" placeholder="+0">
+                            </div>
+                            <div class="list-group-item" id = 'wis-skills'>
+                                <p>Animal Handling</p>
+                                <p>Insight</p>
+                                <p>Medicine</p>
+                                <p>Perception</p>
+                                <p>Survival</p>
+                            </div>
                         </div>
-                        <div class="list-group-item">
-                            <p>Animal Handling</p>
-                            <p>Insight</p>
-                            <p>Medicine</p>
-                            <p>Perception</p>
-                            <p>Survival</p>
+                    </div>
+                </div>
+
+                <div class='col'>
+                    <div class="card">
+                        <div class="card-header bg-secondary bg-gradient">
+                            Charisma
+                        </div>
+                        <div class="list-group  list-group-flush">
+                            <div class="list-group-item">
+                                <label for="cha-modifier-label" class="form-label">Modifier</label>
+                                <input class="form-control" id="cha-modifier" placeholder="+0">
+                            </div>
+                            <div class="list-group-item">
+                                <label for="cha-saving-throw-label" class="form-label">Saving Throw</label>
+                                <input class="form-control" id="cha-saving-throw" placeholder="+0">
+                            </div>
+                            <div class="list-group-item" id = 'cha-skills'>
+                                <p>Deception</p>
+                                <p>Intimidation</p>
+                                <p>Performance</p>
+                                <p>Persuasion</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class='col'>
-                <div class="card">
-                    <div class="card-header bg-secondary bg-gradient">
-                        Charisma
-                    </div>
-                    <div class="list-group  list-group-flush">
-                        <div class="list-group-item">
-                            <label for="cha-modifier-label" class="form-label">Modifier</label>
-                            <input class="form-control" id="cha-modifier" placeholder="+0">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">Spells
                         </div>
-                        <div class="list-group-item">
-                            <label for="cha-saving-throw-label" class="form-label">Saving Throw</label>
-                            <input class="form-control" id="cha-saving-throw" placeholder="+0">
-                        </div>
-                        <div class="list-group-item">
-                            <p>Deception</p>
-                            <p>Intimidation</p>
-                            <p>Performance</p>
-                            <p>Persuasion</p>
-                        </div>
+                        <ul class="list-group" id='spell-list-group'>
+                            <li class="list-group-item">
+                                <select id='spell-list'>
+                                    <% for(let items of spells){%>
+                                        <option value='<%=items.name%>, <%=items.dnd_class%>'>
+                                            <%= items.name%>
+                                        </option>
+                                        <%}%>
+                                </select>
+                                <button class="btn btn-sm btn-success" type='button' id='add-spell-button'>+</button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">Spells
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">Equipment
+                        </div>
+                        <ul class="list-group" id='equipment-list-group'>
+                            <li class="list-group-item">
+                                <select id='equipment-list'>
+                                    <% for(let items of equipment){%>
+                                        <option value='<%=items.name%>, <%=items.damage_type%> , <%=items.properties%>'>
+                                            <%= items.name%>
+                                        </option>
+                                        <%}%>
+                                </select>
+                                <button class="btn btn-sm btn-success" type='button' id='add-equipment-button'>+</button>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="list-group" id='spell-list-group'>
-                        <li class="list-group-item">
-                            <select id='spell-list'>
-                                <% for(let items of spells){%>
-                                    <option value='<%=items.name%>, <%=items.dnd_class%>'>
-                                        <%= items.name%> 
-                                    </option>
-                                    <%}%>
-                            </select>
-                            <button type='submit' id='add-spell-button'>+</button>
-                        </li>
-                    </ul>
                 </div>
-            </div>
 
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">Equipments
+                <div class="row py-2">
+
+                    <div class="col">
+                        <button class="btn btn-primary" id="mysubmit">Save</button>
                     </div>
-                    <ul class="list-group" id='equipment-list-group'>
-                        <li class="list-group-item">
-                            <select id='equipment-list'>
-                                <% for(let items of equipment){%>
-                                    <option value='<%=items.name%>, <%=items.category%>'>
-                                        <%= items.name%> 
-                                    </option>
-                                    <%}%>
-                            </select>
-                            <button type='submit' id='add-equipment-button'>+</button>
-                        </li>
-                    </ul>
                 </div>
-            </div>
-
-        <div class="row py-2">
-            <div class="col">
-                <form action="/user/show" method="POST">
-                    <button type="submit">Create</button>
-                </form>
-            </div>
-        </div>
-
+        </form>
     </div>
 
 

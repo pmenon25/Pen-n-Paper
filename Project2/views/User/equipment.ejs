@@ -8,45 +8,59 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/equipment.css'>
-    <title>Document</title>
+    <title>Equipments</title>
 
 
 </head>
 
 <body>
-    <h1>Weapons</h1>
-    <div class="accordion" id="accordionExample">
-        <% for (let items of equipment){%>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#<%= items.slug%>" aria-expanded="true" aria-controls="collapseOne">
-                        <%= items.name%>
-                    </button>
-                </h2>
-                <div id="<%= items.slug%>" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <ul>
-                            <li>Category: <%= items.category%>
-                            </li>
-                            <li>Weight: <%= items.weight%>
-                            </li>
-                            <li>Cost: <%= items.cost%>
-                            </li>
-                            <li>Damage: <%= items.damage_dice%>
-                            </li>
-                            <li>Damage_Pierce: <%= items.damage_type%>
-                            </li>
+    <ul class="nav nav-pills nav-fill bg-secondary">
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/user/show">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/user/spells">Spells</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/user/classes">Classes</a>
+        </li>
+
+    </ul>
+    <div class='container'>
+        <h1 class="text-dark p-1 display-1 text-center">Equipment</h1>
+        <div class='row'>
+            <% for (let items of equipment){%>
+                <div class='col-3 m-3'>
+                    <div class="card">
+                        <div class="card-header bg-info bg-danger">
+                            <%= items.name%>
+                        </div>
+                        <li class="list-group-item">
+                            <p>Category: <%= items.category%>
+                            </p>
+                        </li>
+                        <li class="list-group-item">
+                            <p>Weight: <%= items.weight%>
+                            </p>
+                        </li>
+                        <li class="list-group-item">
+                            <p>Damage: <%= items.damage_dice%>
+                            </p>
+                        </li>
+                        <li class="list-group-item">
+                            <p>Damage_Pierce: <%= items.damage_type%>
+                            </p>
+                        </li>
 
                         </ul>
                     </div>
                 </div>
-            </div>
+                <%}%>
 
-            <%}%>
+        </div>
     </div>
 
+ 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>

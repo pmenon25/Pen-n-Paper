@@ -2,49 +2,61 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href='/stylesheets/spells.css'>
-    <title>Spells</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' href='/stylesheets/equipment.css'>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <title>Spells</title>
 </head>
 
 <body>
-    <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link"  href="/user/show/equipments">Equipments</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/user/show/classes">Classes</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/user/show">Home</a>
-        </li>
-      </ul>
-    <h1>spells</h1>
-    <div class="card">
-        <% for (let items of spells){%>
-            <div class="card-body">
-                <h5 class="card-title"><%= items.name%></h5>
-                <p class="card-text">
-                <ul>
-                    <li>Range : <%= items.range%>
-                    </li>
-                    <li>Level : <%= items.level%>
-                    </li>
-                    <li>Class : <%= items.dnd_class%>
-                    </li>
-                    <li>Duration : <%= items.duration%>
-                    </li>
-                    <li>Casting Time : <%= items.casting_time%>
-                    </li>
-                </ul>
-                </p>
+
+  <ul class="nav nav-pills nav-fill bg-secondary">
+    <li class="nav-item">
+      <a class="nav-link text-light" href="/user/show">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light" href="/user/equipment">Equipment</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light" href="/user/classes">Classes</a>
+    </li>
+
+  </ul>
+  <div class='container'>
+    <h1 class="text-dark p-1 display-1 text-center">spells</h1>
+    <div class='row'>
+      <% for (let items of spells){%>
+        <div class='col-3 m-3'>
+          <div class="card">
+            <div class="card-header bg-info bg-gradient">
+              <%= items.name%>
             </div>
-            <%}%>
+            <li class="list-group-item">
+              <p>Range: <%= items.range%>
+              </p></li>
+              <li class="list-group-item">
+              <p>Level: <%= items.level%>
+              </p></li>
+              <li class="list-group-item">
+              <p>Class: <%= items.dnd_class%>
+              </p>
+            </li>
+            </ul>
+          </div>
+        </div>
+        <%}%>
+
     </div>
+  </div>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

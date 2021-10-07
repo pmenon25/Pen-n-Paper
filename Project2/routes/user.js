@@ -4,12 +4,12 @@ const userCtrl = require('../controller/userCtrl.js')
 
 router.get('/', userCtrl.index);
 router.get('/show', userCtrl.show);
-router.get("/show/equipments", userCtrl.equipment);
-router.get('/show/spells', userCtrl.spells);
-router.get('/show/classes', userCtrl.classes);
-router.get('/show/create', userCtrl.create);
+router.get("/equipment", userCtrl.equipment);
+router.get('/spells', userCtrl.spells);
+router.get('/classes', userCtrl.classes);
+router.get('/create', userCtrl.create);
 router.post('/show', userCtrl.submit);
-router.get('/show/:id/view', userCtrl.viewSheet);
-router.delete('/show/:id', userCtrl.deleteSheet)
+router.get('/:id/view', userCtrl.viewSheet);
+router.delete('/:id/delete', userCtrl.deleteSheet)
 
 module.exports = router;
