@@ -18,11 +18,11 @@
         <form action="/user/show" method="POST">
             <div class="row">
                 <div class="col">
-                    <input placeholder='<%= defaultSettings.name%>'name="name" id = 'name'>
+                    <input placeholder='Name'name="name" id = 'name' value = <%= defaultSettings.name%>>
                 </div>
 
                 <div class="col">
-                    <label>Class <select id="classes" selected='<%= defaultSettings.class%>'>
+                    <label>Class <select id="classes" selected='Barbarian' value = <%= defaultSettings.classes%> >
                             <option value="Barbarian">Barbarian</option>
                             <option value="Cleric">Cleric</option>
                             <option value="Druid">Druid</option>
@@ -38,8 +38,8 @@
 
                 <div class="col">
                     <label class="label">Level
-                        <select id="level" selected='<%= defaultSettings.level%>'>
-                            <% for(let i=1 ; i <=20 ; i++){%>
+                        <select id="level" selected='1' value = <%= defaultSettings.level%>>
+                            <% for(let i=1 ; i <= 20 ; i++){%>
                                 <option value=<%=i%>>
                                     <%= i%>
                                 </option>
@@ -56,21 +56,21 @@
                 <div class="col">
                     <div>
                         <label for="prof-bonus-label" class="form-label">Proficiency Bonus</label>
-                        <input class="form-control" id="prof-bonus-field" placeholder="+0">
+                        <input class="form-control" id="prof-bonus-field" placeholder="+0" value = <%= defaultSettings.proficiency%>>
                     </div>
                 </div>
 
                 <div class="col">
                     <div>
                         <label for="ac-label" class="form-label">Armour Class</label>
-                        <input class="form-control" id="ac-field" placeholder="+0">
+                        <input class="form-control" id="ac-field" placeholder="+0" value = <%= defaultSettings.armourClass%>>
                     </div>
                 </div>
 
                 <div class="col">
                     <div>
                         <label for="hp-label" class="form-label">Hit Points</label>
-                        <input class="form-control" id="hp-field" placeholder="+0">
+                        <input class="form-control" id="hp-field" placeholder="+0" value = <%= defaultSettings.hitPoints%>>
                     </div>
                 </div>
 
@@ -87,7 +87,7 @@
                         <ul class="list-group  list-group-flush">
                             <li class="list-group-item">
                                 <label for="str-modifier-label" class="form-label">Modifier</label>
-                                <input class="form-control" id="str-modifier" placeholder="+0">
+                                <input class="form-control" id="str-modifier" placeholder="+0" value = <%= defaultSettings.classes%>>
                             </li>
                             <li class="list-group-item">
                                 <label for="str-saving-throw-label" class="form-label">Saving Throw</label>
@@ -261,8 +261,10 @@
 
                 <div class="row py-2">
 
-                    <div class="col">
-                        <button class="btn btn-primary" id="mysubmit">Save</button>
+                    <div class="col py-1 px-1" >
+                        <div id = 'total-roll'></div>
+                        <button class="btn btn-primary" id="save" type = 'submit'>Save</button>
+                        <button class="btn btn-primary" id="roll" type = 'button'>Roll Dice</button>
                     </div>
                 </div>
         </form>

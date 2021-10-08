@@ -34,20 +34,20 @@ var abilityScoreSchema = new mongoose.Schema({
 });
 
 var characterSchema = new mongoose.Schema({
-  name: String
-  // class: String,
-  // level: Number,
-  // hitPoints: Number,
-  // armourClass: Number,
-  // proficiency: Number,
-  // strength: abilityScoreSchema,
-  // dexterity: abilityScoreSchema,
-  // constitution: abilityScoreSchema,
-  // intelligence: abilityScoreSchema,
-  // wisdom: abilityScoreSchema,
-  // charisma: abilityScoreSchema,
-  // spells: [String],
-  // equipment: [String]
+  name: String,
+  class: String,
+  level: Number,
+  hitPoints: Number,
+  armourClass: Number,
+  proficiency: Number,
+  strength: abilityScoreSchema,
+  dexterity: abilityScoreSchema,
+  constitution: abilityScoreSchema,
+  intelligence: abilityScoreSchema,
+  wisdom: abilityScoreSchema,
+  charisma: abilityScoreSchema,
+  spells: [String],
+  equipment: [String]
 });
 
 var userSchema = new mongoose.Schema({

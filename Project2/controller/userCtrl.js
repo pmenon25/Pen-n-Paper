@@ -131,17 +131,74 @@ async function submit(req, res) {
 }
 
 function viewSheet(req, res) {
-    for (let c of req.user.characters) {
-        if (c._id.equals(req.params.id)) {
-            console.log(c.name)
-        res.render('User/characterSheet.ejs', { 
-            defaultSettings:{
-            name :c.name
-        }  })
-        return ;
-        }
+    request(equipmentURL, function (err, response, body) {
+        const equipment = JSON.parse(body);
+        request(spellURL, function (err, response, body) {
+            const spells = JSON.parse(body);
+            request(classURL, function (err, response, body) {
+                const classes = JSON.parse(body);
+                for (let c of req.user.characters) {
+                    if (c._id.equals(req.params.id)) {
+                        console.log(c)
+                        res.render('User/characterSheet.ejs', {
+                            defaultSettings: {
+                                name: c.name,
+                                class: c.class,
+                                level: c.level,
+                                hitPoints: c.hitPoints,
+                                armourClass: c.armourClass,
+                                proficiency: c.proficiency,
+                                strength: {
+                                    modifier: c.strength.modifier,
+                                    savingThrow: c.strength.savingThrow,
+                                    skills: c.strength.skills
+                                },
 
-    }
+                                dexterity: {
+                                    modifier: c.dexterity.modifier,
+                                    savingThrow: c.dexterity.savingThrow,
+                                    skills: c.dexterity.skills
+                                },
+
+                                constitution: {
+                                    modifier: c.constitution.modifier,
+                                    savingThrow: c.constitution.savingThrow,
+                                    skills: c.constitution.skills
+                                },
+
+                                intelligence: {
+                                    modifier: c.intelligence.modifier,
+                                    savingThrow: c.intelligence.savingThrow,
+                                    skills: c.intelligence.skills
+                                },
+
+                                wisdom: {
+                                    modifier: c.wisdom.modifier,
+                                    savingThrow: c.wisdom.savingThrow,
+                                    skills: c.wisdom.skills
+                                },
+
+                                charisma: {
+                                    modifier: c.charisma.modifier,
+                                    savingThrow: c.charisma.savingThrow,
+                                    skills: c.charisma.skills
+                                },
+
+                                spells: [""],
+                                equipment: [""]
+                            },
+                            equipment: equipment.results,
+                            spells: spells.results,
+                            classes: classes.results
+                        });
+                        return;
+                    }
+                }
+            });
+
+        });
+
+    });
 }
 
 function deleteSheet(req, res, next) {
