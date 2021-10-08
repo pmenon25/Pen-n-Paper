@@ -3,7 +3,7 @@ In D&D, each player creates a character who is an adventurer and teams up with o
 
 ##  How to play
 
-![screenshot](public/images/Pen 'n' Paper.png)
+![screenshot](public/images/Pen-n-Paper.png)
 
 1. The DM Describes the Environment
 - The DM tells the players where their adventurers are and what’s around them, presenting the basic scope of options that present themselves
