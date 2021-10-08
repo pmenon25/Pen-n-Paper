@@ -1,3 +1,3 @@
 "scripts": {
-  "start": "node Project2/server.js"
+  "start": "npm start Project2/server.js"
 }
