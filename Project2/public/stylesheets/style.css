@@ -8,12 +8,7 @@ img {
   font-weight: bolder;
 }
 
-.pc-class-display {
-  display: inline-block;
-  font-style: italic;
-}
-
-.pc-level-display {
+.pc-info-display {
   display: inline;
   font-style: italic;
 }

@@ -3,6 +3,7 @@ let diceRoll;
 let rolltimes;
 let totalRoll;
 let totalRollElement = document.getElementById('total-roll');
+
 document.getElementById('roll').addEventListener('click', function (event) {
     for (let counter = 0; counter < rollArray.length; counter++) {
         totalRoll = 0;
@@ -48,8 +49,14 @@ addSpellElement.addEventListener('click', function (event) {
     let spellClasses = value.slice(1);
 
     let newSpellElement = document.createElement('li');
-    newSpellElement.innerHTML = spellName;
-    newSpellElement.setAttribute('class', "list-group-item spell");
+    newSpellElement.setAttribute('class', "list-group-item");
+
+    let spellElement = document.createElement('div');
+    spellElement.innerHTML = spellName;
+    spellElement.setAttribute('class', 'spell');
+    spellElement.setAttribute('style', 'display: inline-block');
+    newSpellElement.appendChild(spellElement);
+
     for (className of spellClasses) {
         let badgeElement = document.createElement('span');
         badgeElement.setAttribute('class', 'badge bg-success mx-1');
@@ -70,9 +77,13 @@ addEquipmentElement.addEventListener('click', function (event) {
     let equipmentCategory = value.slice(1);
 
     let newEquipmentElement = document.createElement('li');
-    newEquipmentElement.innerHTML = equipmentName;
-    newEquipmentElement.setAttribute('class', "list-group-item equipment");
-
+    newEquipmentElement.setAttribute('class' , "list-group-item");
+    let equipmentElement = document.createElement('div');
+    equipmentElement.innerHTML = equipmentName;
+    equipmentElement.setAttribute('class' , 'equipment');
+    equipmentElement.setAttribute('style' , 'display : inline-block');
+    newEquipmentElement.appendChild(equipmentElement)
+   
     for (className of equipmentCategory) {
         let badgeElement = document.createElement('span');
         badgeElement.setAttribute('class', 'badge bg-warning text-black mx-1');
@@ -83,96 +94,101 @@ addEquipmentElement.addEventListener('click', function (event) {
 
 })
 
-function postData(url = '', data = {}) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/user/show', true);
+function getSkillList(className) {
+    let skillList = [];
+    const skills = document.getElementsByClassName(className);
 
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.onreadystatechange = function () {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-
-        }
+    for (let i = 0; i < skills.length; i++) {
+        skillList.push(parseInt(skills[i].value));
     }
 
-    console.log(JSON.stringify(data));
-
-    xhr.send(JSON.stringify(data));
+    return skillList;
 }
 
-function myPost(url, data) {
-    fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-        mode: 'no-cors'
-        // -- or --
-        // body : JSON.stringify({
-        // user : document.getElementById('user').value,
-        // ...
-        // })
-    }).then(
-        response => response.json()
-        // same as function(response) {return response.text();}
-    ).then(
-        html => console.log(html)
-    );
+function getSpellList() {
+    let spellList = [];
+    const spells = document.getElementsByClassName('spell')
+    for (let spell of spells) {
+        spellList.push(spell.innerHTML)
+    }
+
+    return spellList;
 }
 
-async function sendCharacterSheet() {
+function getEquipmentList(){
+    let equipmentList = [];
+    const equipments = document.getElementsByClassName('equipment');
+    for(let equipment of equipments){
+        equipmentList.push(equipment.innerHTML)
+    }
 
-    let response = await fetch('/usr/show', {
-        method: 'POST',
+    return equipmentList;
+}
+
+function getCharacterData() {
+    return {
+        name: document.getElementById('name').value,
+        class: document.getElementById('classes').value,
+        level: parseInt(document.getElementById('level').value),
+        hitPoints: parseInt(document.getElementById('hp-field').value),
+        armourClass: parseInt(document.getElementById('ac-field').value),
+        proficiency: parseInt(document.getElementById('prof-bonus-field').value),
+        strength: {
+            modifier: parseInt(document.getElementById('str-modifier').value),
+            savingThrow: parseInt(document.getElementById('str-saving-throw').value),
+            skills: getSkillList('str-skill')
+        },
+
+        dexterity: {
+            modifier: parseInt(document.getElementById('dex-modifier').value),
+            savingThrow: parseInt(document.getElementById('dex-saving-throw').value),
+            skills: getSkillList('dex-skill')
+        },
+
+        constitution: {
+            modifier: parseInt(document.getElementById('con-modifier').value),
+            savingThrow: parseInt(document.getElementById('con-saving-throw').value),
+            skills: getSkillList('con-skill')
+        },
+
+        intelligence: {
+            modifier: parseInt(document.getElementById('int-modifier').value),
+            savingThrow: parseInt(document.getElementById('int-saving-throw').value),
+            skills: getSkillList('int-skill')
+        },
+
+        wisdom: {
+            modifier: parseInt(document.getElementById('int-modifier').value),
+            savingThrow: parseInt(document.getElementById('int-saving-throw').value),
+            skills: getSkillList('wis-skill')
+        },
+
+        charisma: {
+            modifier: parseInt(document.getElementById('cha-modifier').value),
+            savingThrow: parseInt(document.getElementById('cha-saving-throw').value),
+            skills: getSkillList('cha-skill')
+        },
+
+        spells: getSpellList(),
+        equipment: getEquipmentList()
+    }
+}
+
+document.getElementById('save').addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    await fetch(SUBMIT_URL, {
+        method: SUBMIT_METHOD,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            name: document.getElementById('name').value,
-            class: "Barbarian", // document.getElementById('classes').value,
-            level: "1", //  document.getElementById('level').value,
-            hitPoints: "2", // document.getElementById('hp-field').value,
-            armourClass: "3", // document.getElementById('ac-field').value,
-            proficiency: "5", // document.getElementById('prof-bonus-field').value,
-            strength: {
-                modifier: "2", // document.getElementById('str-modifier').value,
-                savingThrow: "3", // document.getElementById('str-saving-throw').value,
-                skills: [2, 3, 4]
-            },
+        redirect: 'follow',
+        body: JSON.stringify(getCharacterData())
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            if (data.success) {
+                window.location.href = data.url;
+            }
+        });
+});
 
-            dexterity: {
-                modifier: "2", // document.getElementById('dex-modifier').value,
-                savingThrow: "7", // document.getElementById('dex-saving-throw').value,
-                skills: [1, 2, 3]
-            },
-
-            constitution: {
-                modifier: "9", // document.getElementById('con-modifier').value,
-                savingThrow: "2", // document.getElementById('con-saving-throw').value,
-                skills: [2, 3, 4]
-            },
-
-            intelligence: {
-                intModifier: 0, // document.getElementById('int-modifier').value,
-                intSavingThrow: 2, // document.getElementById('int-saving-throw').value,
-                skills: [2, 3, 4]
-            },
-
-            wisdom: {
-                modifier: 1, // document.getElementById('wis-modifier').value,
-                savingThrow: 2, // document.getElementById('wis-saving-throw').value,
-                skills: [2, 3, 4]
-            },
-
-            charisma: {
-                modifier: 5, // document.getElementById('cha-modifier').value,
-                savingThrow: 2, // document.getElementById('cha-saving-throw').value,
-                skills: [7, 8]
-            },
-
-            spells: ["A", "B"], // document.getElementsByClassName('spell')[0].innerHTML,
-            equipment: ["X", "Y"] // document.getElementsByClassName('equipment')[0].innerHTML,
-        })
-    }).then(res => console.log(res.json()))
-
-    // myPost('/usr/show', })
-}
-
-let saveButton = document.getElementById('save');
-saveButton.addEventListener('click', sendCharacterSheet);

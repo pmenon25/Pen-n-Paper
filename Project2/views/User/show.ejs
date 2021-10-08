@@ -29,7 +29,7 @@
   <div class='container-sm'>
     <div class='row my-5 align-items-center justify-content-center'>
       <div class='col-2'>
-        <a class="btn btn-lg btn-warning" role="button" href="/user/create">Create Character</a>
+        <a class="btn btn-lg btn-warning" role="button" href="/user/new">Create Character</a>
       </div>
     </div>
     <div class='row'>
@@ -37,13 +37,13 @@
         <ul class="list-group ">
           <% for(let items of result){%>
 
-            <li class="list-group-item d-flex justify-content-between ">
+            <li class="list-group-item d-flex justify-content-between">
               <p class="pc-name-display">
                 <%= items.name%>
-              </p>
-              <p class="pc-class-display"> class<%=items.class%>
-              </p>
-              <p class="pc-level-display"> level<%= items.level%>
+                  <span class="small text-muted">
+                    <%=items.class%>
+                      <%= items.level%>
+                  </span>
               </p>
 
               <form name="deleteCharacterSheet<%= items._id %>" action="/user/<%= items._id%>/delete?_method=DELETE"

@@ -3,6 +3,7 @@ const User = require('../models/user.js');
 const equipmentURL = "https://api.open5e.com/weapons/";
 const spellURL = "https://api.open5e.com/spells/";
 const classURL = "https://api.open5e.com/classes/";
+const LANDING_PAGE_URL = "/user/show";
 
 function index(req, res, next) {
     res.render('User/index.ejs', {
@@ -20,7 +21,6 @@ function equipment(req, res, next) {
     request(equipmentURL, function (err, response, body) {
         const equipment = JSON.parse(body);
         res.render('User/equipment.ejs', { equipment: equipment.results })
-
     })
 }
 
@@ -38,7 +38,56 @@ function classes(req, res, next) {
     })
 }
 
-function renderCharacterSheet(res) {
+function getDefaultCharacter() {
+    return {
+        name: "Name",
+        class: "Barbarian",
+        level: 1,
+        hitPoints: 0,
+        armourClass: 0,
+        proficiency: 0,
+        strength: {
+            modifier: 0,
+            savingThrow: 0,
+            skills: [0]
+        },
+
+        dexterity: {
+            modifier: 0,
+            savingThrow: 0,
+            skills: [0]
+        },
+
+        constitution: {
+            modifier: 0,
+            savingThrow: 0,
+            skills: [0]
+        },
+
+        intelligence: {
+            intModifier: 0,
+            intSavingThrow: 0,
+            skills: [0]
+        },
+
+        wisdom: {
+            modifier: 0,
+            savingThrow: 0,
+            skills: [0]
+        },
+
+        charisma: {
+            modifier: 0,
+            savingThrow: 0,
+            skills: [0]
+        },
+
+        spells: [""],
+        equipment: [""]
+    }
+}
+
+function renderCharacterSheet(res, character, create = false) {
     request(equipmentURL, function (err, response, body) {
         const equipment = JSON.parse(body);
         request(spellURL, function (err, response, body) {
@@ -46,53 +95,8 @@ function renderCharacterSheet(res) {
             request(classURL, function (err, response, body) {
                 const classes = JSON.parse(body);
                 res.render('User/characterSheet.ejs', {
-                    defaultSettings: {
-                        name: "Name",
-                        class: "Barbarian",
-                        level: 1,
-                        hitPoints: 0,
-                        armourClass: 0,
-                        proficiency: 0,
-                        strength: {
-                            modifier: 0,
-                            savingThrow: 0,
-                            skills: [0]
-                        },
-
-                        dexterity: {
-                            modifier: 0,
-                            savingThrow: 0,
-                            skills: [0]
-                        },
-
-                        constitution: {
-                            modifier: 0,
-                            savingThrow: 0,
-                            skills: [0]
-                        },
-
-                        intelligence: {
-                            intModifier: 0,
-                            intSavingThrow: 0,
-                            skills: [0]
-                        },
-
-                        wisdom: {
-                            modifier: 0,
-                            savingThrow: 0,
-                            skills: [0]
-                        },
-
-                        charisma: {
-                            modifier: 0,
-                            savingThrow: 0,
-                            skills: [0]
-                        },
-
-                        spells: [""],
-                        equipment: [""]
-                    },
-
+                    create: create,
+                    character: character,
                     equipment: equipment.results,
                     spells: spells.results,
                     classes: classes.results
@@ -103,12 +107,10 @@ function renderCharacterSheet(res) {
 }
 
 function create(req, res, next) {
-    renderCharacterSheet(res);
+    renderCharacterSheet(res, getDefaultCharacter(), create = true);
 }
 
 async function submit(req, res) {
-    console.log("submit -->", req.body);
-
     req.user.characters.push({
         name: req.body.name,
         class: req.body.class,
@@ -127,85 +129,33 @@ async function submit(req, res) {
     })
 
     await req.user.save();
-    res.redirect('/user/show')
+    res.json({ 'success': true, 'url': LANDING_PAGE_URL });
+}
+
+async function updateSheet(req, res) {
+    User.findOne({ 'characters._id': req.params.id }, function (err, user) {
+        user.characters.id(req.params.id).remove();
+        user.characters.push(req.body);
+        user.save(function (err) {
+            res.json({ 'success': true, 'url': LANDING_PAGE_URL });
+        });
+    })
 }
 
 function viewSheet(req, res) {
-    request(equipmentURL, function (err, response, body) {
-        const equipment = JSON.parse(body);
-        request(spellURL, function (err, response, body) {
-            const spells = JSON.parse(body);
-            request(classURL, function (err, response, body) {
-                const classes = JSON.parse(body);
-                for (let c of req.user.characters) {
-                    if (c._id.equals(req.params.id)) {
-                        console.log(c)
-                        res.render('User/characterSheet.ejs', {
-                            defaultSettings: {
-                                name: c.name,
-                                class: c.class,
-                                level: c.level,
-                                hitPoints: c.hitPoints,
-                                armourClass: c.armourClass,
-                                proficiency: c.proficiency,
-                                strength: {
-                                    modifier: c.strength.modifier,
-                                    savingThrow: c.strength.savingThrow,
-                                    skills: c.strength.skills
-                                },
-
-                                dexterity: {
-                                    modifier: c.dexterity.modifier,
-                                    savingThrow: c.dexterity.savingThrow,
-                                    skills: c.dexterity.skills
-                                },
-
-                                constitution: {
-                                    modifier: c.constitution.modifier,
-                                    savingThrow: c.constitution.savingThrow,
-                                    skills: c.constitution.skills
-                                },
-
-                                intelligence: {
-                                    modifier: c.intelligence.modifier,
-                                    savingThrow: c.intelligence.savingThrow,
-                                    skills: c.intelligence.skills
-                                },
-
-                                wisdom: {
-                                    modifier: c.wisdom.modifier,
-                                    savingThrow: c.wisdom.savingThrow,
-                                    skills: c.wisdom.skills
-                                },
-
-                                charisma: {
-                                    modifier: c.charisma.modifier,
-                                    savingThrow: c.charisma.savingThrow,
-                                    skills: c.charisma.skills
-                                },
-
-                                spells: [""],
-                                equipment: [""]
-                            },
-                            equipment: equipment.results,
-                            spells: spells.results,
-                            classes: classes.results
-                        });
-                        return;
-                    }
-                }
-            });
-
-        });
-
-    });
+    for (let c of req.user.characters) {
+        if (c._id.equals(req.params.id)) {
+            renderCharacterSheet(res, c, create = false)
+            return;
+        }
+    }
 }
 
 function deleteSheet(req, res, next) {
     User.findOne({ 'characters._id': req.params.id }, function (err, user) {
         user.characters.id(req.params.id).remove();
         user.save(function (err) {
-            res.redirect('/user/show')
+            res.redirect(LANDING_PAGE_URL)
         });
 
     })
@@ -220,5 +170,6 @@ module.exports = {
     create,
     submit,
     viewSheet,
-    deleteSheet
+    deleteSheet,
+    updateSheet
 }

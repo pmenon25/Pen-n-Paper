@@ -5,24 +5,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href='/stylesheets/characterSheet.css'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Pen 'n' Paper</title>
 
 </head>
 
 <body>
+    <ul class="nav nav-pills nav-fill bg-secondary">
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/user/show">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/user/equipment">Equipment</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/user/spells">Spells</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/user/classes">Classes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/auth/logout">Log Out</a>
+        </li>
+    </ul>
     <div class='container-sm'>
         <h1>Character Creation</h1>
-        <form action="/user/show" method="POST">
+        <form action="/user/create" method="POST">
             <div class="row">
                 <div class="col">
-                    <input placeholder='Name'name="name" id = 'name' value = <%= defaultSettings.name%>>
+                    <input placeholder='Name' name="name" id='name' value='<%=character.name%>'>
                 </div>
 
                 <div class="col">
-                    <label>Class <select id="classes" selected='Barbarian' value = <%= defaultSettings.classes%> >
+                    <label>Class <select id="classes" selected='Barbarian' value=<%=character.classes%> >
                             <option value="Barbarian">Barbarian</option>
                             <option value="Cleric">Cleric</option>
                             <option value="Druid">Druid</option>
@@ -38,8 +54,8 @@
 
                 <div class="col">
                     <label class="label">Level
-                        <select id="level" selected='1' value = <%= defaultSettings.level%>>
-                            <% for(let i=1 ; i <= 20 ; i++){%>
+                        <select id="level" selected='1' value=<%=character.level%>>
+                            <% for(let i=1 ; i <=20 ; i++){%>
                                 <option value=<%=i%>>
                                     <%= i%>
                                 </option>
@@ -56,21 +72,22 @@
                 <div class="col">
                     <div>
                         <label for="prof-bonus-label" class="form-label">Proficiency Bonus</label>
-                        <input class="form-control" id="prof-bonus-field" placeholder="+0" value = <%= defaultSettings.proficiency%>>
+                        <input class="form-control" id="prof-bonus-field" placeholder="+0"
+                            value=<%=character.proficiency%>>
                     </div>
                 </div>
 
                 <div class="col">
                     <div>
                         <label for="ac-label" class="form-label">Armour Class</label>
-                        <input class="form-control" id="ac-field" placeholder="+0" value = <%= defaultSettings.armourClass%>>
+                        <input class="form-control" id="ac-field" placeholder="+0" value=<%=character.armourClass%>>
                     </div>
                 </div>
 
                 <div class="col">
                     <div>
                         <label for="hp-label" class="form-label">Hit Points</label>
-                        <input class="form-control" id="hp-field" placeholder="+0" value = <%= defaultSettings.hitPoints%>>
+                        <input class="form-control" id="hp-field" placeholder="+0" value=<%=character.hitPoints%>>
                     </div>
                 </div>
 
@@ -87,15 +104,17 @@
                         <ul class="list-group  list-group-flush">
                             <li class="list-group-item">
                                 <label for="str-modifier-label" class="form-label">Modifier</label>
-                                <input class="form-control" id="str-modifier" placeholder="+0" value = <%= defaultSettings.classes%>>
+                                <input class="form-control" id="str-modifier" placeholder="+0"
+                                value=<%= character.strength.modifier %>>
                             </li>
                             <li class="list-group-item">
                                 <label for="str-saving-throw-label" class="form-label">Saving Throw</label>
-                                <input class="form-control" id="str-saving-throw" placeholder="+0">
+                                <input class="form-control" id="str-saving-throw" placeholder="+0" value=<%= character.strength.savingThrow %>>
                             </li>
 
-                            <li class="list-group-item" id = 'str-skills'>
+                            <li class="list-group-item" id='str-skills'>
                                 <p>Athletics</p>
+                                <input class="form-control str-skill" placeholder="+0" value=<%= character.strength.skills[0] %>>
                             </li>
                         </ul>
                     </div>
@@ -110,16 +129,22 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <label for="dex-modifier-label" class="form-label">Modifier</label>
-                                <input class="form-control" id="dex-modifier" placeholder="+0">
+                                <input class="form-control" id="dex-modifier" placeholder="+0" value=<%= character.dexterity.modifier%>>
                             </li>
                             <li class="list-group-item">
                                 <label for="dex-saving-throw-label" class="form-label">Saving Throw</label>
-                                <input class="form-control" id="dex-saving-throw" placeholder="+0">
+                                <input class="form-control" id="dex-saving-throw" placeholder="+0" value=<%= character.dexterity.savingThrow%>>
                             </li>
-                            <li class="list-group-item" id = 'dex-skills'>
-                                <p>Acrobatics</p>
-                                <p>Sleight of Hand</p>
-                                <p>Stealth</p>
+                            <li class="list-group-item" id='dex-skills'>
+                                <p>Acrobatics
+                                    <input class="form-control dex-skill" placeholder="+0" value=<%= character.dexterity.skills[0] %>>
+                                </p>
+                                <p>Sleight of Hand
+                                    <input class="form-control dex-skill" placeholder="+0" value=<%= character.dexterity.skills[1] %>>
+                                </p>
+                                <p>Stealth
+                                    <input class="form-control dex-skill" placeholder="+0" value=<%= character.dexterity.skills[2] %>>
+                                </p>
                             </li>
                         </ul>
                     </div>
@@ -133,12 +158,12 @@
                         <div class="list-group  list-group-flush">
                             <div class="list-group-item">
                                 <label for="con-modifier-label" class="form-label">Modifier</label>
-                                <input class="form-control" id="con-modifier" placeholder="+0">
+                                <input class="form-control" id="con-modifier" placeholder="+0" value=<%= character.constitution.modifier%>>
                             </div>
 
                             <div class="list-group-item">
                                 <label for="con-saving-throw-label" class="form-label">Saving Throw</label>
-                                <input class="form-control" id="con-saving-throw" placeholder="+0">
+                                <input class="form-control" id="con-saving-throw" placeholder="+0" value=<%= character.constitution.savingThrow%>>
                             </div>
 
                         </div>
@@ -153,18 +178,28 @@
                         <div class="list-group list-group-flush">
                             <div class="list-group-item">
                                 <label for="int-modifier-label" class="form-label">Modifier</label>
-                                <input class="form-control" id="int-modifier" placeholder="+0">
+                                <input class="form-control" id="int-modifier" placeholder="+0" value=<%= character.intelligence.modifier%>>
                             </div>
                             <div class="list-group-item">
                                 <label for="int-saving-throw-label" class="form-label">Saving Throw</label>
-                                <input class="form-control" id="int-saving-throw" placeholder="+0">
+                                <input class="form-control" id="int-saving-throw" placeholder="+0" value=<%= character.intelligence.savingThrow %>>
                             </div>
-                            <div class="list-group-item" id = 'int-skills'>
-                                <p>Arcana</p>
-                                <p>History </p>
-                                <p>Investigation </p>
-                                <p>Nature</p>
-                                <p>Religion</p>
+                            <div class="list-group-item" id='int-skills'>
+                                <p>Arcana
+                                    <input class="form-control int-skill" placeholder="+0" value=<%= character.intelligence.skills[0] %>>
+                                </p>
+                                <p>History
+                                    <input class="form-control int-skill" placeholder="+0" value=<%= character.intelligence.skills[1] %>>
+                                </p>
+                                <p>Investigation
+                                    <input class="form-control int-skill" placeholder="+0" value=<%= character.intelligence.skills[2] %>>
+                                </p>
+                                <p>Nature
+                                    <input class="form-control int-skill" placeholder="+0" value=<%= character.intelligence.skills[3] %> >
+                                </p>
+                                <p>Religion
+                                    <input class="form-control int-skill" placeholder="+0" value=<%= character.intelligence.skills[4] %>>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -178,18 +213,28 @@
                         <div class="list-group  list-group-flush">
                             <div class="list-group-item">
                                 <label for="wis-modifier-label" class="form-label">Modifier</label>
-                                <input class="form-control" id="wis-modifier" placeholder="+0">
+                                <input class="form-control" id="wis-modifier" placeholder="+0" value=<%= character.wisdom.modifier %>>
                             </div>
                             <div class="list-group-item">
                                 <label for="wis-saving-throw-label" class="form-label">Saving Throw</label>
-                                <input class="form-control" id="wis-saving-throw" placeholder="+0">
+                                <input class="form-control" id="wis-saving-throw" placeholder="+0" value=<%= character.wisdom.savingThrow %>>
                             </div>
-                            <div class="list-group-item" id = 'wis-skills'>
-                                <p>Animal Handling</p>
-                                <p>Insight</p>
-                                <p>Medicine</p>
-                                <p>Perception</p>
-                                <p>Survival</p>
+                            <div class="list-group-item" id='wis-skills'>
+                                <p>Animal Handling
+                                    <input class="form-control wis-skill" placeholder="+0" value=<%= character.wisdom.skills[0] %>>
+                                </p>
+                                <p>Insight
+                                    <input class="form-control wis-skill" placeholder="+0" value=<%= character.wisdom.skills[1] %>>
+                                </p>
+                                <p>Medicine
+                                    <input class="form-control wis-skill" placeholder="+0" value=<%= character.wisdom.skills[2] %>>
+                                </p>
+                                <p>Perception
+                                    <input class="form-control wis-skill" placeholder="+0" value=<%= character.wisdom.skills[3] %>>
+                                </p>
+                                <p>Survival
+                                    <input class="form-control wis-skill" placeholder="+0" value=<%= character.wisdom.skills[4] %>>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -203,17 +248,25 @@
                         <div class="list-group  list-group-flush">
                             <div class="list-group-item">
                                 <label for="cha-modifier-label" class="form-label">Modifier</label>
-                                <input class="form-control" id="cha-modifier" placeholder="+0">
+                                <input class="form-control" id="cha-modifier" placeholder="+0" value=<%= character.charisma.modifier %>>
                             </div>
                             <div class="list-group-item">
                                 <label for="cha-saving-throw-label" class="form-label">Saving Throw</label>
-                                <input class="form-control" id="cha-saving-throw" placeholder="+0">
+                                <input class="form-control" id="cha-saving-throw" placeholder="+0" value=<%= character.charisma.savingThrow %>>
                             </div>
-                            <div class="list-group-item" id = 'cha-skills'>
-                                <p>Deception</p>
-                                <p>Intimidation</p>
-                                <p>Performance</p>
-                                <p>Persuasion</p>
+                            <div class="list-group-item" id='cha-skills'>
+                                <p>Deception
+                                    <input class="form-control cha-skill" placeholder="+0" value=<%= character.charisma.skills[0] %>>
+                                </p>
+                                <p>Intimidation
+                                    <input class="form-control cha-skill" placeholder="+0" value=<%= character.charisma.skills[1] %>>
+                                </p>
+                                <p>Performance
+                                    <input class="form-control cha-skill" placeholder="+0" value=<%= character.charisma.skills[2] %>>
+                                </p>
+                                <p>Persuasion
+                                    <input class="form-control cha-skill" placeholder="+0" value=<%= character.charisma.skills[3] %>>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -226,6 +279,13 @@
                         <div class="card-header">Spells
                         </div>
                         <ul class="list-group" id='spell-list-group'>
+                            <% for (let spell of character.spells) { %>
+                            <li class="list-group-item">
+                                <div class = "spell" style = "display: inline-block">
+                                    <%= spell %>
+                                </div>
+                            </li>
+                            <% } %>
                             <li class="list-group-item">
                                 <select id='spell-list'>
                                     <% for(let items of spells){%>
@@ -245,7 +305,14 @@
                         <div class="card-header">Equipment
                         </div>
                         <ul class="list-group" id='equipment-list-group'>
+                            <% for (let equipment of character.equipment) { %>
                             <li class="list-group-item">
+                                <div class = "equipment" style = "display: inline-block">
+                                    <%= equipment %>
+                                </div>
+                            </li>
+                            <% } %>
+                            <li class = 'list-group-item'>
                                 <select id='equipment-list'>
                                     <% for(let items of equipment){%>
                                         <option value='<%=items.name%>, <%=items.damage_type%> , <%=items.properties%>'>
@@ -253,7 +320,8 @@
                                         </option>
                                         <%}%>
                                 </select>
-                                <button class="btn btn-sm btn-success" type='button' id='add-equipment-button'>+</button>
+                                <button class="btn btn-sm btn-success" type='button'
+                                    id='add-equipment-button'>+</button>
                             </li>
                         </ul>
                     </div>
@@ -261,10 +329,10 @@
 
                 <div class="row py-2">
 
-                    <div class="col py-1 px-1" >
-                        <div id = 'total-roll'></div>
-                        <button class="btn btn-primary" id="save" type = 'submit'>Save</button>
-                        <button class="btn btn-primary" id="roll" type = 'button'>Roll Dice</button>
+                    <div class="col py-1 px-1">
+                        <div id='total-roll'></div>
+                        <button class="btn btn-primary" id="save" type='submit'>Save</button>
+                        <button class="btn btn-primary" id="roll" type='button'>Roll Dice</button>
                     </div>
                 </div>
         </form>
@@ -275,6 +343,20 @@
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
     <script src="/javascripts/main.js"></script>
+
+    <% if (create) { %>
+        <script>
+            SUBMIT_URL = "/user/create"
+            SUBMIT_METHOD = "POST"
+        </script>
+        <% } else { %>
+            <script>
+                SUBMIT_URL = "/user/<%= character._id%>/update"
+                SUBMIT_METHOD = "PUT"
+            </script>
+            <% }%>
+
+
 </body>
 
 </html>
